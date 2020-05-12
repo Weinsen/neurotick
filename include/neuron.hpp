@@ -21,6 +21,7 @@ class NeuronBase {
 	protected:
 
 		double value{0};
+		int id;
 
 	public:
 
@@ -44,7 +45,7 @@ class Neuron : public NeuronBase {
 
 	public:
 
-		Neuron();
+		Neuron(int i);
 
 		double output() const;
 
@@ -67,7 +68,7 @@ class NeuronInputValue : public NeuronBase {
 
 	public:
 
-		NeuronInputValue(double v=0);
+		NeuronInputValue(int i, double v=0);
 
 		NeuronInputValue& calculate();
 

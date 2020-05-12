@@ -14,9 +14,9 @@ NeuronBase& NeuronBase::calculate()
 /**
  * @brief      Constructs a new instance.
  */
-Neuron::Neuron()
+Neuron::Neuron(int i)
 {
-
+	id = i;
 }
 
 
@@ -58,9 +58,10 @@ double Neuron::output() const
  *
  * @param[in]  v     { parameter_description }
  */
-NeuronInputValue::NeuronInputValue(double v)
+NeuronInputValue::NeuronInputValue(int i, double v)
 {
 	value = v;
+	id = i;
 }
 
 double NeuronInputValue::output() const

@@ -1,5 +1,27 @@
 #include "neural.hpp"
 
+void Connector::connect(Model& model, std::string receptor, std::string layer)
+{
+	std::vector<NeuronBase *>* neurons1 = model.getLayer(receptor).getNeurons();
+	std::vector<NeuronBase *>* neurons2 = model.getLayer(layer).getNeurons();
+
+	for (auto n : *neurons1) {
+		for (auto i : *neurons2) {
+			n->addInput(i);
+		}
+	}
+}
+
+void Connector::connect(Model& model, NeuronBase& neuron, Layer& layer)
+{
+	std::vector<NeuronBase *>* neurons = layer.getNeurons();
+}
+
+void Connector::connect(Model& model, NeuronBase& neuron, std::string layer)
+{
+	std::vector<NeuronBase *>* neurons = model.getLayer(layer).getNeurons();
+}
+
 /**
  * @brief      { function_description }
  *
@@ -24,7 +46,7 @@ Layer& Layer::calculate()
 Layer& Layer::addNeuron() 
 {
 
-	neurons.emplace_back(new Neuron());
+	neurons.emplace_back(new Neuron(neurons.size()));
 
 	return *this;
 
@@ -33,7 +55,7 @@ Layer& Layer::addNeuron()
 Layer& Layer::addNeurons(int q) 
 {
 	while (q) {
-		neurons.emplace_back(new Neuron());
+		addNeuron();
 		q--;
 	}
 
@@ -44,7 +66,7 @@ Layer& Layer::addNeurons(int q)
 Layer& Layer::addInput(std::string name, double value) 
 {
 
-	neurons.emplace_back(new NeuronInputValue(value));
+	neurons.emplace_back(new NeuronInputValue(neurons.size(), value));
 
 	return *this;
 

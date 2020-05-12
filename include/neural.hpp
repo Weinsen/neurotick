@@ -10,6 +10,7 @@
 #include "neuron.hpp"
 
 class Layer;
+class Model;
 
 /**
  * @brief      This class describes a connector.
@@ -21,6 +22,9 @@ class Connector {
 		std::string input;
 
 	public:
+		void connect(Model& model, std::string receptor, std::string layer);
+		void connect(Model& model, NeuronBase& neuron, Layer& layer);
+		void connect(Model& model, NeuronBase& neuron, std::string layer);
 
 };
 
@@ -31,6 +35,7 @@ class Layer {
 
 	private:
 		std::vector<NeuronBase *> neurons;
+		std::string name;
 
 	public:
 		Layer();
