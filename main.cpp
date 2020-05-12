@@ -1,5 +1,7 @@
 #include "neural.hpp"
+#include "neuron.hpp"
 #include <iostream>
+#include <fstream>
 
 int main() 
 {
@@ -8,21 +10,44 @@ int main()
 	Layer layer2;
 
 	Model model;
-	model.addLayer(&layer1).addLayer(&layer2);
+	model.addLayer("l1").addLayer("l2").addLayer("l3");
 
-	NeuronInputValue neuron1(1);
-	NeuronInputValue neuron2(2);
+	model.getLayer("l1").addInput("left", 1).addInput("right", 1);
+	model.getLayer("l2").addNeurons(50);
+	model.getLayer("l3").addNeurons(50);
+	model.getLayer("l4").addNeurons(1);
 
-	layer1.addNeuron(&neuron1).addNeuron(&neuron2);
+	std::vector<NeuronBase *>* neurons1 = model.getLayer("l1").getNeurons();
+	std::vector<NeuronBase *>* neurons2 = model.getLayer("l2").getNeurons();
+	std::vector<NeuronBase *>* neurons3 = model.getLayer("l3").getNeurons();
+	std::vector<NeuronBase *>* neurons4 = model.getLayer("l4").getNeurons();
 
-	Neuron neuron3;
-	neuron3.addInput(&neuron1, 1).addInput(&neuron2, 0.5);
+	for (auto n : *neurons2) {
+		for (auto i : *neurons1) {
+			n->addInput(i);
+		}
+	}
 
-	layer2.addNeuron(&neuron3);
-	
+	for (auto n : *neurons3) {
+		for (auto i : *neurons2) {
+			n->addInput(i);
+		}
+	}
+
+	for (auto n : *neurons4) {
+		for (auto i : *neurons3) {
+			n->addInput(i);
+		}
+	}
+
 	model.calculate();
+	
+	for (auto n : *neurons4) {
+		std::cout << n->output() << std::endl;
+	}
 
-	std::cout << neuron3.output() << std::endl;
+	std::fstream fs;
+	fs.open("./model", std::ios::app);
 
 	return 0;
 

@@ -1,76 +1,5 @@
 #include "neural.hpp"
 
-double NeuronBase::output()  const
-{
-	return 0;
-}
-
-NeuronBase& NeuronBase::calculate() 
-{
-	return *this;
-}
-
-/**
- * @brief      Constructs a new instance.
- */
-Neuron::Neuron()
-{
-
-}
-
-Neuron& Neuron::addInput(const NeuronBase *input, double weight)
-{
-	NeuronInput i = {
-		input,
-		weight
-	};
-	inputs.push_back(i);
-
-	return *this;
-}
-
-Neuron& Neuron::calculate()
-{
-	double output = 0;
-	for (auto n : inputs) {
-		output += n.neuron->output() * n.w;
-	}
-	value = output;
-	return *this;
-}
-
-Neuron& Neuron::bias(double bias)
-{
-	b = bias;
-
-	return *this;
-}
-
-double Neuron::output()
-{
-	return value;
-}
-
-/**
- * @brief      Constructs a new instance.
- *
- * @param[in]  v     { parameter_description }
- */
-NeuronInputValue::NeuronInputValue(double v)
-{
-	value = v;
-}
-
-double NeuronInputValue::output() const
-{
-	return value;
-}
-
-NeuronInputValue& NeuronInputValue::calculate()
-{
-	return *this;
-}
-
 /**
  * @brief      { function_description }
  *
@@ -92,13 +21,38 @@ Layer& Layer::calculate()
 
 }
 
-Layer& Layer::addNeuron(NeuronBase *neuron) 
+Layer& Layer::addNeuron() 
 {
 
-	neurons.push_back(neuron);
+	neurons.emplace_back(new Neuron());
 
 	return *this;
 
+}
+
+Layer& Layer::addNeurons(int q) 
+{
+	while (q) {
+		neurons.emplace_back(new Neuron());
+		q--;
+	}
+
+	return *this;
+
+}
+
+Layer& Layer::addInput(std::string name, double value) 
+{
+
+	neurons.emplace_back(new NeuronInputValue(value));
+
+	return *this;
+
+}
+
+std::vector<NeuronBase *>* Layer::getNeurons()
+{
+	return &neurons;
 }
 
 /**
@@ -115,18 +69,26 @@ Model& Model::calculate()
 {
 
 	for (auto l : layers) {
-		l->calculate();
+		l.second.calculate();
 	}
 
 	return *this;
 
 }
 
-Model& Model::addLayer(Layer *layer) 
+Model& Model::addLayer(std::string name) 
 {
 
-	layers.push_back(layer);
+	Layer layer;
+	layers[name] = layer;
 
 	return *this;
+
+}
+
+Layer& Model::getLayer(std::string name) 
+{
+
+	return layers[name];
 
 }
