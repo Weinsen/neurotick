@@ -25,6 +25,8 @@ int main()
 	std::cout << model.getLayer("l4");
 
 	model.getNamedNeuron("i2").set(5);
+	model.getNamedNeuron("i1").set(-1);
+
 	model.calculate();
 	std::cout << model.getLayer("l4");
 
