@@ -5,69 +5,25 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <map>
 
-class Neuron;
-class NeuronBase;
-class NeuronInputValue;
+#include "neuron.hpp"
+
 class Layer;
-
-typedef struct {
-	const NeuronBase *neuron;
-	double w;
-} NeuronInput;
+class Model;
 
 /**
- * @brief      This class describes a neuron base.
+ * @brief      This class describes a connector.
  */
-class NeuronBase {
-
-	protected:
-
-		double value{0};
-
-	public:
-
-		virtual double output() const;
-		virtual NeuronBase& calculate();
-
-};
-
-/**
- * @brief      This class describes a neuron.
- */
-class Neuron : public NeuronBase {
+class Connector {
 
 	private:
-
-		std::vector<NeuronInput> inputs;
-		double b{0};
-
-	public:
-
-		Neuron();
-
-		double output();
-
-		Neuron& bias(double bias);
-		Neuron& calculate();
-
-		Neuron& sigma();
-		Neuron& addInput(const NeuronBase *input, double weight=1);
-		
-};
-
-/**
- * @brief      This class describes a neuron input value.
- */
-class NeuronInputValue : public NeuronBase {
+		std::string owner;
+		std::string input;
 
 	public:
-
-		NeuronInputValue(double v=0);
-
-		NeuronInputValue& calculate();
-
-		double output() const;
+		void connect(Model& model, std::string receptor, std::string layer);
+		void connect(Model& model, const char *receptor, const char *layer);
 
 };
 
@@ -78,11 +34,22 @@ class Layer {
 
 	private:
 		std::vector<NeuronBase *> neurons;
+		std::string name;
+		Model& model;
 
 	public:
-		Layer();
-		Layer& addNeuron(NeuronBase *neuron);
+		Layer(Model& model, std::string name);
+		Layer& addNeuron();
+		Layer& addNeurons(int q);
+		Layer& addInput(std::string name, double value);
+		Layer& addNamed(std::string name);
 		Layer& calculate();
+
+		std::vector<NeuronBase *>* getNeurons();
+
+		friend std::ostream& operator<< (std::ostream& os, const Layer& obj);	
+		std::ostream& serialize(std::ostream& out) const;
+
 
 };
 
@@ -92,12 +59,16 @@ class Layer {
 class Model {
 
 	private:
-		std::vector<Layer *> layers;
+		std::map<std::string, Layer *> layers;
+		std::map<std::string, NeuronBase *> namedNeurons;
 
 	public:
 		Model();
-		Model& addLayer(Layer *layer);
+		Model& addLayer(std::string name);
+		Model& addNamed(std::string name, NeuronBase *neuron); 
 		Model& calculate();
+		Layer& getLayer(std::string name);
+		NeuronBase& getNamedNeuron(std::string name);
 
 };
 

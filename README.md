@@ -9,7 +9,8 @@ make
 ## todo
 
 Objects in objects
-- Remove pointers
 - Save model to file
 - Method connect using graph
 - Input / output as template
+- Train method
+- Better input classes

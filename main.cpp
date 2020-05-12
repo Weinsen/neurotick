@@ -1,28 +1,33 @@
 #include "neural.hpp"
+#include "neuron.hpp"
 #include <iostream>
+#include <fstream>
 
 int main() 
 {
 
-	Layer layer1;
-	Layer layer2;
-
 	Model model;
-	model.addLayer(&layer1).addLayer(&layer2);
 
-	NeuronInputValue neuron1(1);
-	NeuronInputValue neuron2(2);
+	Connector linker;
 
-	layer1.addNeuron(&neuron1).addNeuron(&neuron2);
+	model.addLayer("l1").addLayer("l2").addLayer("l3").addLayer("l4");
 
-	Neuron neuron3;
-	neuron3.addInput(&neuron1, 1).addInput(&neuron2, 0.5);
+	model.getLayer("l1").addInput("i1", 1).addInput("i2", 1);
+	model.getLayer("l2").addNeurons(50);
+	model.getLayer("l3").addNeurons(50);
+	model.getLayer("l4").addNamed("o1").addNamed("o2");
 
-	layer2.addNeuron(&neuron3);
-	
+	linker.connect(model, "l2", "l1");
+	linker.connect(model, "l3", "l2");
+	linker.connect(model, "l4", "l3");
+
 	model.calculate();
+	std::cout << model.getLayer("l4");
 
-	std::cout << neuron3.output() << std::endl;
+	model.getNamedNeuron("i2").set(5);
+	model.calculate();
+	std::cout << model.getLayer("l4");
+
 
 	return 0;
 
