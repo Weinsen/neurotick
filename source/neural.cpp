@@ -24,6 +24,38 @@ void Connector::connect(Model& model, const char *receptor, const char *layer)
 	}
 }
 
+void Connector::connect(Model& model, const char *receptor, const char *layer, std::vector<double> *weights)
+{
+	std::vector<NeuronBase *>* neurons1 = model.getLayer(std::string(receptor)).getNeurons();
+	std::vector<NeuronBase *>* neurons2 = model.getLayer(std::string(layer)).getNeurons();
+
+	for (auto n : *neurons1) {
+		int i=0;
+		for (auto w : *weights) {
+			n->addInput((*neurons2)[i], w);
+			i++;
+		}
+	}
+}
+
+void Connector::connect(Model& model, const char *receptor, const char *layer, std::vector<std::vector<double>> *weights)
+{
+	std::vector<NeuronBase *>* neurons1 = model.getLayer(std::string(receptor)).getNeurons();
+	std::vector<NeuronBase *>* neurons2 = model.getLayer(std::string(layer)).getNeurons();
+
+	int i=0;
+	for (auto n : *weights) {
+		int j=0;
+		for (auto w : n) {
+			if (w != 0) {
+				(*neurons1)[i]->addInput((*neurons2)[j], w);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 /**
  * @brief      { function_description }
  *
