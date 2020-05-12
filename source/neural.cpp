@@ -12,14 +12,16 @@ void Connector::connect(Model& model, std::string receptor, std::string layer)
 	}
 }
 
-void Connector::connect(Model& model, NeuronBase& neuron, Layer& layer)
+void Connector::connect(Model& model, const char *receptor, const char *layer)
 {
-	std::vector<NeuronBase *>* neurons = layer.getNeurons();
-}
+	std::vector<NeuronBase *>* neurons1 = model.getLayer(std::string(receptor)).getNeurons();
+	std::vector<NeuronBase *>* neurons2 = model.getLayer(std::string(layer)).getNeurons();
 
-void Connector::connect(Model& model, NeuronBase& neuron, std::string layer)
-{
-	std::vector<NeuronBase *>* neurons = model.getLayer(layer).getNeurons();
+	for (auto n : *neurons1) {
+		for (auto i : *neurons2) {
+			n->addInput(i);
+		}
+	}
 }
 
 /**
@@ -27,7 +29,7 @@ void Connector::connect(Model& model, NeuronBase& neuron, std::string layer)
  *
  * @return     { description_of_the_return_value }
  */
-Layer::Layer() 
+Layer::Layer(Model& model, std::string name) : model(model), name(name)
 {
 
 }
@@ -60,21 +62,43 @@ Layer& Layer::addNeurons(int q)
 	}
 
 	return *this;
-
 }
 
 Layer& Layer::addInput(std::string name, double value) 
 {
-
-	neurons.emplace_back(new NeuronInputValue(neurons.size(), value));
+	NeuronBase *nptr = new NeuronInputValue(neurons.size(), value);
+	neurons.emplace_back(nptr);
+	model.addNamed(name, nptr);
 
 	return *this;
+}
 
+Layer& Layer::addNamed(std::string name) 
+{
+	NeuronBase *nptr = new Neuron(neurons.size());
+	neurons.emplace_back(nptr);
+	model.addNamed(name, nptr);
+
+	return *this;
 }
 
 std::vector<NeuronBase *>* Layer::getNeurons()
 {
 	return &neurons;
+}
+
+std::ostream& operator<< (std::ostream& os, const Layer& obj)
+{
+	return obj.serialize(os);
+}
+
+std::ostream& Layer::serialize(std::ostream& out) const
+{
+	out << "Layer(Name:" << name << ")" << std::endl;
+	for (auto n : neurons) {
+		out << "\t" << *n;
+	}
+	return out;
 }
 
 /**
@@ -91,7 +115,7 @@ Model& Model::calculate()
 {
 
 	for (auto l : layers) {
-		l.second.calculate();
+		l.second->calculate();
 	}
 
 	return *this;
@@ -101,16 +125,26 @@ Model& Model::calculate()
 Model& Model::addLayer(std::string name) 
 {
 
-	Layer layer;
-	layers[name] = layer;
+	layers[name] = (new Layer(*this, name));
 
 	return *this;
 
 }
 
+Model& Model::addNamed(std::string name, NeuronBase *neuron) 
+{
+	namedNeurons[name] = neuron;
+
+	return *this;
+}
+
 Layer& Model::getLayer(std::string name) 
 {
-
-	return layers[name];
-
+	return *(layers[name]);
 }
+
+NeuronBase& Model::getNamedNeuron(std::string name)
+{
+	return *(namedNeurons[name]);	
+}
+

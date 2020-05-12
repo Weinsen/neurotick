@@ -11,6 +11,16 @@ NeuronBase& NeuronBase::calculate()
 	return *this;
 }
 
+NeuronBase& NeuronBase::set(double v)
+{
+	return *this;
+}
+
+std::ostream& NeuronBase::serialize(std::ostream& out) const
+{
+	out << "NeuronBase" << std::endl;
+}
+
 /**
  * @brief      Constructs a new instance.
  */
@@ -48,9 +58,19 @@ Neuron& Neuron::bias(double bias)
 	return *this;
 }
 
+Neuron& Neuron::set(double v)
+{
+	return *this;
+}
+
 double Neuron::output() const
 {
 	return value;
+}
+
+std::ostream& Neuron::serialize(std::ostream& out) const
+{
+	out << "Neuron(ID:" << id << ",Output:" << value << ",Inputs:" << inputs.size() << ")" << std::endl;
 }
 
 /**
@@ -72,4 +92,29 @@ double NeuronInputValue::output() const
 NeuronInputValue& NeuronInputValue::calculate()
 {
 	return *this;
+}
+
+NeuronInputValue& NeuronInputValue::set(double v)
+{
+	value = v;
+
+	return *this;
+}
+
+std::ostream& NeuronInputValue::serialize(std::ostream& out) const
+{
+	out << "NeuronInputValue(ID:" << id << ")" << std::endl;
+}
+
+/**
+ * @brief      Bitwise left shift operator.
+ *
+ * @param      os    The operating system
+ * @param[in]  obj   The object
+ *
+ * @return     The result of the bitwise left shift
+ */
+std::ostream& operator<< (std::ostream& os, const NeuronBase& obj)
+{
+	return obj.serialize(os);
 }

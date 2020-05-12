@@ -6,34 +6,28 @@
 int main() 
 {
 
-	Layer layer1;
-	Layer layer2;
-
 	Model model;
 
 	Connector linker;
 
-	model.addLayer("l1").addLayer("l2").addLayer("l3");
+	model.addLayer("l1").addLayer("l2").addLayer("l3").addLayer("l4");
 
-	model.getLayer("l1").addInput("left", 1).addInput("right", 1);
+	model.getLayer("l1").addInput("i1", 1).addInput("i2", 1);
 	model.getLayer("l2").addNeurons(50);
 	model.getLayer("l3").addNeurons(50);
-	model.getLayer("l4").addNeurons(1);
+	model.getLayer("l4").addNamed("o1").addNamed("o2");
 
-	std::vector<NeuronBase *>* neurons4 = model.getLayer("l4").getNeurons();
+	linker.connect(model, "l2", "l1");
+	linker.connect(model, "l3", "l2");
+	linker.connect(model, "l4", "l3");
 
-	linker.connect(model, std::string("l2"), std::string("l1"));
-	linker.connect(model, std::string("l3"), std::string("l2"));
-	linker.connect(model, std::string("l4"), std::string("l3"));
-	
 	model.calculate();
-	
-	for (auto n : *neurons4) {
-		std::cout << n->output() << std::endl;
-	}
+	std::cout << model.getLayer("l4");
 
-	std::fstream fs;
-	fs.open("./model", std::ios::app);
+	model.getNamedNeuron("i2").set(5);
+	model.calculate();
+	std::cout << model.getLayer("l4");
+
 
 	return 0;
 
