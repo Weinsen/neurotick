@@ -43,11 +43,11 @@ Neuron& Neuron::addInput(const NeuronBase *input, double weight)
 
 Neuron& Neuron::calculate()
 {
-	double output = 0;
+	double v = 0;
 	for (auto n : inputs) {
-		output += n.neuron->output() * n.w;
+		v += n.neuron->output() * n.w;
 	}
-	value = output;
+	value = 1 / (1 + exp(-v));
 	return *this;
 }
 
