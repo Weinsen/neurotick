@@ -16,7 +16,7 @@
 /******************************************************************/
 
 /**
- * @file     neural.hpp
+ * @file     connector.hpp
  * @author   Weinsen
  * @date     2020/05/12
  * @brief    { brief }
@@ -25,18 +25,30 @@
  * { Full Description }
  */
 
-#ifndef NEUROTICK_NEURAL_HPP
-#define NEUROTICK_NEURAL_HPP
+#ifndef NEUROTICK_CONNECTOR_HPP
+#define NEUROTICK_CONNECTOR_HPP
 
-#include <cmath>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <map>
+#include "neural.hpp"
 
-#include "neuron.hpp"
-#include "connector.hpp"
-#include "layer.hpp"
-#include "model.hpp"
+class Layer;
+class Model;
+
+/**
+ * @brief      This class describes a connector.
+ */
+class Connector {
+
+	private:
+		std::string owner;
+		std::string input;
+
+	public:
+		void connect(Model& model, std::string receptor, std::string layer);
+		void connect(Model& model, const char *receptor, const char *layer);
+		void connect(Model& model, const char *receptor, const char *layer, std::vector<double> *weights);
+		void connect(Model& model, const char *receptor, const char *layer, std::vector<std::vector<double>> *weights);
+		void connect(Model& model, std::vector<double> *weights);
+
+};
 
 #endif
