@@ -16,7 +16,7 @@
 /******************************************************************/
 
 /**
- * @file     neural.hpp
+ * @file     model.hpp
  * @author   Weinsen
  * @date     2020/05/12
  * @brief    { brief }
@@ -25,18 +25,37 @@
  * { Full Description }
  */
 
-#ifndef NEUROTICK_NEURAL_HPP
-#define NEUROTICK_NEURAL_HPP
+#ifndef NEUROTICK_MODEL_HPP
+#define NEUROTICK_MODEL_HPP
 
-#include <cmath>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <map>
+#include "neural.hpp"
 
-#include "neuron.hpp"
-#include "connector.hpp"
-#include "layer.hpp"
-#include "model.hpp"
+class Layer;
+class NeuronBase;
+
+/**
+ * @brief      This class describes a model.
+ */
+class Model {
+
+	private:
+		std::map<std::string, Layer *> layers;
+		std::map<std::string, NeuronBase *> namedNeurons;
+
+	public:
+		Model();
+		Model& addLayer(std::string name);
+		Model& addNamed(std::string name, NeuronBase *neuron); 
+		Model& calculate();
+		Layer& getLayer(std::string name);
+		NeuronBase& getNamedNeuron(std::string name);
+		
+		std::map<std::string, Layer *>& getLayers();
+
+		Model& operator= (Model& obj);
+
+		int connections();
+
+};
 
 #endif

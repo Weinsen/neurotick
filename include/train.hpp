@@ -16,27 +16,18 @@
 /******************************************************************/
 
 /**
- * @file     neural.hpp
+ * @file     train.hpp
  * @author   Weinsen
- * @date     2020/05/12
+ * @date     2020/05/13
  * @brief    { brief }
- * @defgroup Model
+ * @defgroup Train
  * 
  * { Full Description }
  */
 
-#ifndef NEUROTICK_NEURAL_HPP
-#define NEUROTICK_NEURAL_HPP
+#ifndef NEUROTICK_TRAIN_HPP
+#define NEUROTICK_TRAIN_HPP
 
-#include <cmath>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <map>
 
-#include "neuron.hpp"
-#include "connector.hpp"
-#include "layer.hpp"
-#include "model.hpp"
 
 #endif

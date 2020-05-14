@@ -1,11 +1,37 @@
-#ifndef NEURON_HPP
-#define NEURON_HPP
+/*******************************************************************
+* This file is part of neurotick.
+* 
+* neurotick is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+* 
+* neurotick is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with neurotick.  If not, see <https://www.gnu.org/licenses/>
+/******************************************************************/
+
+/**
+ * @file     neuron.hpp
+ * @author   Weinsen
+ * @date     2020/05/12
+ * @brief    { brief }
+ * @defgroup Model
+ * 
+ * { Full Description }
+ */
+
+#ifndef NEUROTICK_NEURON_HPP
+#define NEUROTICK_NEURON_HPP
 
 #include "neural.hpp"
 
 class Neuron;
 class NeuronBase;
-class NeuronInputValue;
 
 typedef struct {
 	const NeuronBase *neuron;
@@ -22,8 +48,14 @@ class NeuronBase {
 
 		double value{0};
 		int id;
+		std::string name;
+
+		friend class Neuron; 
 
 	public:
+
+		NeuronBase();
+		NeuronBase(const NeuronBase& neuron);
 
 		virtual double output() const;
 		virtual NeuronBase& calculate();
@@ -50,6 +82,9 @@ class Neuron : public NeuronBase {
 	public:
 
 		Neuron(int i);
+		Neuron(int i, std::string label);
+		Neuron(int i, std::string label, double v);
+		Neuron(const NeuronBase &neuron);
 
 		double output() const;
 
@@ -62,26 +97,6 @@ class Neuron : public NeuronBase {
 
 		std::ostream& serialize(std::ostream& out) const;
 		
-};
-
-/**
- * @brief      This class describes a neuron input value.
- */
-class NeuronInputValue : public NeuronBase {
-
-	private:
-
-		std::string name{""};
-
-	public:
-
-		NeuronInputValue(int i, double v=0);
-		NeuronInputValue& calculate();
-		NeuronInputValue& set(double v);
-		double output() const;
-
-		std::ostream& serialize(std::ostream& out) const;
-
 };
 
 #endif
