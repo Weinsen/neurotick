@@ -1,6 +1,18 @@
 #include "neural.hpp"
 #include "neuron.hpp"
 
+NeuronBase::NeuronBase() : id(0), name(""), value(0)
+{
+
+}
+
+NeuronBase::NeuronBase(const NeuronBase& neuron)
+{
+	id = neuron.id;
+	name = neuron.name;
+	value = neuron.value;
+}
+
 double NeuronBase::output() const
 {
 	return 0;
@@ -27,11 +39,35 @@ std::ostream& NeuronBase::serialize(std::ostream& out) const
 Neuron::Neuron(int i)
 {
 	id = i;
+	name = "";
 }
 
+Neuron::Neuron(int i, std::string label)
+{
+	id = i;
+	name = label;
+}
+
+Neuron::Neuron(int i, std::string label, double v)
+{
+	id = i;
+	name = label;
+	value = v;
+}
+
+Neuron::Neuron(const NeuronBase &neuron)
+{
+	id = neuron.id;
+	name = neuron.name;
+	value = neuron.value;
+}
 
 Neuron& Neuron::addInput(const NeuronBase *input, double weight)
 {
+	if (weight == 0) {
+		return *this;
+	}
+
 	NeuronInput i = {
 		input,
 		weight
@@ -43,11 +79,13 @@ Neuron& Neuron::addInput(const NeuronBase *input, double weight)
 
 Neuron& Neuron::calculate()
 {
-	double v = 0;
-	for (auto n : inputs) {
-		v += n.neuron->output() * n.w;
-	}
-	value = 1 / (1 + exp(-v));
+	if (inputs.size() > 0) {
+		double v = 0;
+		for (auto n : inputs) {
+			v += n.neuron->output() * n.w;
+		}
+		value = 1 / (1 + exp(-v));
+	} 
 	return *this;
 }
 
@@ -70,40 +108,13 @@ double Neuron::output() const
 
 std::ostream& Neuron::serialize(std::ostream& out) const
 {
-	out << "Neuron(ID:" << id << ",Output:" << value << ",Inputs:" << inputs.size() << ")" << std::endl;
-}
+	out << "Neuron(ID:" << id;
 
-/**
- * @brief      Constructs a new instance.
- *
- * @param[in]  v     { parameter_description }
- */
-NeuronInputValue::NeuronInputValue(int i, double v)
-{
-	value = v;
-	id = i;
-}
+	if (name != "") {
+		out << ",Name:\"" << name << "\"";
+	}
 
-double NeuronInputValue::output() const
-{
-	return value;
-}
-
-NeuronInputValue& NeuronInputValue::calculate()
-{
-	return *this;
-}
-
-NeuronInputValue& NeuronInputValue::set(double v)
-{
-	value = v;
-
-	return *this;
-}
-
-std::ostream& NeuronInputValue::serialize(std::ostream& out) const
-{
-	out << "NeuronInputValue(ID:" << id << ")" << std::endl;
+	out << ",Output:" << value << ",Inputs:" << inputs.size() << ")" << std::endl;
 }
 
 /**

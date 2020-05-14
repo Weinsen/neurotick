@@ -16,7 +16,7 @@
 /******************************************************************/
 
 /**
- * @file     neural.hpp
+ * @file     layer.hpp
  * @author   Weinsen
  * @date     2020/05/12
  * @brief    { brief }
@@ -25,18 +25,44 @@
  * { Full Description }
  */
 
-#ifndef NEUROTICK_NEURAL_HPP
-#define NEUROTICK_NEURAL_HPP
+#ifndef NEUROTICK_LAYER_HPP
+#define NEUROTICK_LAYER_HPP
 
-#include <cmath>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <map>
+#include "neural.hpp"
 
-#include "neuron.hpp"
-#include "connector.hpp"
-#include "layer.hpp"
-#include "model.hpp"
+class Model;
+
+/**
+ * @brief      This class describes a layer.
+ */
+class Layer {
+
+	private:
+		std::vector<NeuronBase *> neurons;
+		std::string name;
+		Model& model;
+
+	public:
+		Layer(Model& model, std::string name);
+		Layer& addNeuron();
+		Layer& addNeuron(std::string name, double value=0);
+		Layer& addNeuron(const NeuronBase& neuron);
+
+		Layer& addNeurons(int q);
+
+		Layer& calculate();
+
+		std::string getName();
+
+		int size();
+
+		std::vector<NeuronBase *>* getNeurons();
+
+		Layer& operator= (Layer& obj);
+		friend std::ostream& operator<< (std::ostream& os, const Layer& obj);	
+		std::ostream& serialize(std::ostream& out) const;
+
+
+};
 
 #endif
