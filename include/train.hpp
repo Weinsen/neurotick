@@ -28,6 +28,28 @@
 #ifndef NEUROTICK_TRAIN_HPP
 #define NEUROTICK_TRAIN_HPP
 
+#include <vector>
+#include <random>
+#include <cmath>
+#include "neural.hpp"
 
+class Model;
+
+class Trainer {
+
+	private:
+		int batch_size{10};
+		int sigma{1};
+		std::vector<Model *> models;
+		Model& model;
+
+	public:
+		Trainer(Model& model);
+		Trainer& randomizeVector(Model& model);
+		Trainer& setBatch(int size);
+		Trainer& setSigma(int s);
+		Trainer& run();
+
+};
 
 #endif

@@ -10,17 +10,17 @@ make
 
 ## To Do
 
-- Copy model
-- Templates
-- Save model to file
-- Method connect using graph
-- Input / output as template
-- Transfer functions
+- Copy model ***
+- Input values (reference)
 - Train method
-- Better input classes
+- Save model to file
+- Templates
+- Transfer functions
 - "Compile" into static and more performatic model
 
 ## Changelog
+
+### v0.1.4
 
 ### v0.1.3
 

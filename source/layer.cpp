@@ -66,21 +66,21 @@ std::string Layer::getName()
 	return name;
 }
 
-std::vector<NeuronBase *>* Layer::getNeurons()
+std::vector<NeuronBase *>& Layer::getNeurons()
 {
-	return &neurons;
+	return neurons;
 }
 
 std::ostream& operator<< (std::ostream& os, const Layer& obj)
 {
-	return obj.serialize(os);
+	return obj.print(os);
 }
 
-std::ostream& Layer::serialize(std::ostream& out) const
+std::ostream& Layer::print(std::ostream& out) const
 {
 	out << "Layer(Name:" << name << ")" << std::endl;
 	for (auto n : neurons) {
-		out << "\t" << *n;
+		out << *n << std::endl;
 	}
 	return out;
 }
@@ -88,7 +88,7 @@ std::ostream& Layer::serialize(std::ostream& out) const
 Layer& Layer::operator= (Layer& obj)
 {
 	if (this != &obj) {
-		for (auto n : *(obj.getNeurons())) {
+		for (auto n : obj.getNeurons()) {
 			addNeuron(*n);
 		}
 	}

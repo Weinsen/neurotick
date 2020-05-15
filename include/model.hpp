@@ -39,22 +39,34 @@ class NeuronBase;
 class Model {
 
 	private:
-		std::map<std::string, Layer *> layers;
+		static int count;
+		int id{0};
+		std::vector<Layer *> layers;
+		std::map<std::string, Layer *> namedLayers;
 		std::map<std::string, NeuronBase *> namedNeurons;
+		std::vector<double> connections;
 
 	public:
 		Model();
+		Model(Model& obj);
 		Model& addLayer(std::string name);
 		Model& addNamed(std::string name, NeuronBase *neuron); 
+		Model& setLinks();
 		Model& calculate();
 		Layer& getLayer(std::string name);
 		NeuronBase& getNamedNeuron(std::string name);
 		
-		std::map<std::string, Layer *>& getLayers();
+		std::vector<Layer *>& getLayers();
 
 		Model& operator= (Model& obj);
 
-		int connections();
+		Model& resetConnections();
+		Model& setConnections(std::vector<double>& conn);
+		std::vector<double>& getConnections();
+		int parameters();
+
+		friend std::ostream& operator<< (std::ostream& os, const Model& obj);	
+		std::ostream& print(std::ostream& out) const;
 
 };
 

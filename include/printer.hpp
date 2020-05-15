@@ -16,29 +16,25 @@
 /******************************************************************/
 
 /**
- * @file     neural.hpp
+ * @file     printer.hpp
  * @author   Weinsen
- * @date     2020/05/12
+ * @date     2020/05/15
  * @brief    { brief }
- * @defgroup Model
+ * @defgroup Debug
  * 
  * { Full Description }
  */
 
-#ifndef NEUROTICK_NEURAL_HPP
-#define NEUROTICK_NEURAL_HPP
+#ifndef NEUROTICK_PRINTER_HPP
+#define NEUROTICK_PRINTER_HPP
 
-#include <cmath>
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <map>
+#include "neural.hpp"
 
-#include "neuron.hpp"
-#include "connector.hpp"
-#include "layer.hpp"
-#include "model.hpp"
-#include "train.hpp"
+class Printer {
 
+	public:
+		std::ostream& print(Model& model);
+
+};
 
 #endif
