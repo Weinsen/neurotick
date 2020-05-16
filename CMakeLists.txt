@@ -16,4 +16,14 @@ file(GLOB main_SRCS
     "${PROJECT_SOURCE_DIR}/source/*.c"
     )
 
-add_executable(neurotick ${main_SRCS} main.cpp)
+add_library(neurotick ${main_SRCS} )
+
+install(TARGETS neurotick
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+
+add_subdirectory(examples/block_race)
+
+#add_executable(ntk ${main_SRCS} main.cpp)
+add_executable(ntk main.cpp)
+target_link_libraries(ntk neurotick)

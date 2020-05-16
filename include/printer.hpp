@@ -16,52 +16,24 @@
 /******************************************************************/
 
 /**
- * @file     train.hpp
+ * @file     printer.hpp
  * @author   Weinsen
- * @date     2020/05/13
+ * @date     2020/05/15
  * @brief    { brief }
- * @defgroup Train
+ * @defgroup Debug
  * 
  * { Full Description }
  */
 
-#ifndef NEUROTICK_TRAIN_HPP
-#define NEUROTICK_TRAIN_HPP
+#ifndef NEUROTICK_PRINTER_HPP
+#define NEUROTICK_PRINTER_HPP
 
-#include <vector>
-#include <random>
-#include <cmath>
 #include "neural.hpp"
 
-class Model;
-
-class Trainer {
-
-	private:
-		int batch_size{10};
-		double sigma{1};
-		std::vector<Model *> models;
-		Model& model;
+class Printer {
 
 	public:
-		Trainer(Model& model);
-
-		Model& createModel();
-
-		Trainer& createModels();
-		Trainer& randomizeVector(Model& model);
-		Trainer& randomizeVectors();
-		Trainer& setBatch(int size);
-		Trainer& setSigma(double s);
-		Trainer& run();
-
-		Trainer& genetic(Model& model);		
-		Trainer& genetic(Model *model);		
-
-		Model& getModel(int id);
-		
-		std::vector<std::vector<double>> output();
-		std::vector<double> output(int id);
+		std::ostream& print(Model& model);
 
 };
 

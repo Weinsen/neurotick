@@ -56,11 +56,13 @@ class Layer {
 
 		int size();
 
-		std::vector<NeuronBase *>* getNeurons();
+		Layer& input(std::vector<double> input);
+		std::vector<NeuronBase *>& getNeurons();
+		std::vector<double> output();
 
 		Layer& operator= (Layer& obj);
 		friend std::ostream& operator<< (std::ostream& os, const Layer& obj);	
-		std::ostream& serialize(std::ostream& out) const;
+		std::ostream& print(std::ostream& out) const;
 
 
 };
