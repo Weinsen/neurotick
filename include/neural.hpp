@@ -38,5 +38,6 @@
 #include "connector.hpp"
 #include "layer.hpp"
 #include "model.hpp"
+#include "train.hpp"
 
 #endif

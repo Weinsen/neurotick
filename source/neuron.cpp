@@ -25,10 +25,17 @@ NeuronBase& NeuronBase::calculate()
 
 NeuronBase& NeuronBase::set(double v)
 {
+	value = v;
 	return *this;
 }
 
-std::ostream& NeuronBase::serialize(std::ostream& out) const
+NeuronBase& NeuronBase::reset()
+{
+	value = 0;
+	return *this;
+}
+
+std::ostream& NeuronBase::print(std::ostream& out) const
 {
 	out << "NeuronBase" << std::endl;
 }
@@ -84,20 +91,24 @@ Neuron& Neuron::calculate()
 		for (auto n : inputs) {
 			v += n.neuron->output() * n.w;
 		}
+		v += bias;
 		value = 1 / (1 + exp(-v));
-	} 
-	return *this;
-}
-
-Neuron& Neuron::bias(double bias)
-{
-	b = bias;
-
+	} else {
+		value = bias;
+	}
 	return *this;
 }
 
 Neuron& Neuron::set(double v)
 {
+	bias = v;
+	return *this;
+}
+
+Neuron& Neuron::reset()
+{
+	inputs.clear();
+	bias = 0;
 	return *this;
 }
 
@@ -106,7 +117,7 @@ double Neuron::output() const
 	return value;
 }
 
-std::ostream& Neuron::serialize(std::ostream& out) const
+std::ostream& Neuron::print(std::ostream& out) const
 {
 	out << "Neuron(ID:" << id;
 
@@ -114,7 +125,7 @@ std::ostream& Neuron::serialize(std::ostream& out) const
 		out << ",Name:\"" << name << "\"";
 	}
 
-	out << ",Output:" << value << ",Inputs:" << inputs.size() << ")" << std::endl;
+	out << ",Output:" << value << ",Inputs:" << inputs.size() << ")";
 }
 
 /**
@@ -127,5 +138,5 @@ std::ostream& Neuron::serialize(std::ostream& out) const
  */
 std::ostream& operator<< (std::ostream& os, const NeuronBase& obj)
 {
-	return obj.serialize(os);
+	return obj.print(os);
 }

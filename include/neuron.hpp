@@ -63,9 +63,10 @@ class NeuronBase {
 		virtual NeuronBase& addInput() {};		
 		virtual NeuronBase& addInput(const NeuronBase *input, double weight=1) {};	
 		virtual NeuronBase& set(double v);
+		virtual NeuronBase& reset();
 
 		friend std::ostream& operator<< (std::ostream& os, const NeuronBase& obj);	
-		virtual std::ostream& serialize(std::ostream& out) const;
+		virtual std::ostream& print(std::ostream& out) const;
 
 };
 
@@ -77,7 +78,7 @@ class Neuron : public NeuronBase {
 	private:
 
 		std::vector<NeuronInput> inputs;
-		double b{0};
+		double bias{0};
 
 	public:
 
@@ -88,14 +89,14 @@ class Neuron : public NeuronBase {
 
 		double output() const;
 
-		Neuron& bias(double bias);
 		Neuron& calculate();
 
 		Neuron& sigma();
 		Neuron& addInput(const NeuronBase *input, double weight=1);
 		Neuron& set(double v); 
+		Neuron& reset(); 
 
-		std::ostream& serialize(std::ostream& out) const;
+		std::ostream& print(std::ostream& out) const;
 		
 };
 
