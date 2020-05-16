@@ -30,11 +30,12 @@ int main()
 		 0,  1, -2,  2,  0, -1, -2,  0,  0,  7,
 		 1,  1, -2,  0,  5, -1,  0, -1,  0,  7
 	};
-	linker.connect(model, w);
+
+	model.setConnections(w);
 
 	// Initilize trainer
 	Trainer train(model);
-	train.setBatch(1);
+	train.setBatch(2).createModels();
 	train.run();
 
 	model.calculate();
@@ -42,6 +43,13 @@ int main()
 	train.randomizeVector(model);
 	linker.connect(model);
 	model.calculate();
+
+	auto ret = train.output();
+	for (auto r : ret) {
+		for (auto v : r) {
+			std::cout << v << std::endl;
+		}
+	}
 
 	return 0;
 

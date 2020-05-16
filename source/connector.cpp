@@ -56,13 +56,6 @@
 // 	}
 // }
 
-void Connector::connect(Model& model, std::vector<double>& weights)
-{
-	model.setConnections(weights);
-
-	connect(model);
-}
-
 void Connector::connect(Model& model)
 {
 	auto weights = model.getConnections();

@@ -56,7 +56,9 @@ class Layer {
 
 		int size();
 
+		Layer& input(std::vector<double> input);
 		std::vector<NeuronBase *>& getNeurons();
+		std::vector<double> output();
 
 		Layer& operator= (Layer& obj);
 		friend std::ostream& operator<< (std::ostream& os, const Layer& obj);	

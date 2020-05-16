@@ -39,16 +39,29 @@ class Trainer {
 
 	private:
 		int batch_size{10};
-		int sigma{1};
+		double sigma{1};
 		std::vector<Model *> models;
 		Model& model;
 
 	public:
 		Trainer(Model& model);
+
+		Model& createModel();
+
+		Trainer& createModels();
 		Trainer& randomizeVector(Model& model);
+		Trainer& randomizeVectors();
 		Trainer& setBatch(int size);
-		Trainer& setSigma(int s);
+		Trainer& setSigma(double s);
 		Trainer& run();
+
+		Trainer& genetic(Model& model);		
+		Trainer& genetic(Model *model);		
+
+		Model& getModel(int id);
+		
+		std::vector<std::vector<double>> output();
+		std::vector<double> output(int id);
 
 };
 

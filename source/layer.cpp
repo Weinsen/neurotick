@@ -21,6 +21,17 @@ Layer& Layer::calculate()
 
 }
 
+Layer& Layer::input(std::vector<double> input) 
+{
+	int i = 0;
+	for (auto n : neurons) {
+		n->set(input[i++]);
+	}
+
+	return *this;
+
+}
+
 Layer& Layer::addNeuron() 
 {
 
@@ -69,6 +80,15 @@ std::string Layer::getName()
 std::vector<NeuronBase *>& Layer::getNeurons()
 {
 	return neurons;
+}
+
+std::vector<double> Layer::output()
+{
+	std::vector<double> out;
+	for (auto n : neurons) {
+		out.push_back(n->output());
+	}
+	return out;	
 }
 
 std::ostream& operator<< (std::ostream& os, const Layer& obj)

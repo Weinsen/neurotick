@@ -47,7 +47,6 @@ class Connector {
 		// void connect(Model& model, const char *receptor, const char *layer);
 		// void connect(Model& model, const char *receptor, const char *layer, std::vector<double> *weights);
 		// void connect(Model& model, const char *receptor, const char *layer, std::vector<std::vector<double>> *weights);
-		void connect(Model& model, std::vector<double>& weights);
 		void connect(Model& model);
 
 };

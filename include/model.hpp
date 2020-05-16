@@ -60,9 +60,11 @@ class Model {
 
 		Model& operator= (Model& obj);
 
+		Model& input(std::vector<double> input);
 		Model& resetConnections();
 		Model& setConnections(std::vector<double>& conn);
 		std::vector<double>& getConnections();
+		std::vector<double> output();
 		int parameters();
 
 		friend std::ostream& operator<< (std::ostream& os, const Model& obj);	

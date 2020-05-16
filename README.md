@@ -2,11 +2,15 @@
 
 Small project of Neural Networks for education reasons. The main goal is to achieve an easy to use, easy to train Neural Network and then "compile" a static and performatic model, for either run as a stand-alone or to be included in another project.
 
+Whole project compiles as a static lib.
+
 ## Build
 
+```
 cd ./Build
 cmake ..
 make
+```
 
 ## To Do
 

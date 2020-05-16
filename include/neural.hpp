@@ -40,5 +40,4 @@
 #include "model.hpp"
 #include "train.hpp"
 
-
 #endif

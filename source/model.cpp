@@ -70,6 +70,10 @@ Model& Model::setConnections(std::vector<double>& conn)
 {
 	connections = conn;
 
+	Connector linker;
+
+	linker.connect(*this);
+
 	return *this;
 }
 
@@ -98,6 +102,17 @@ int Model::parameters()
 	}
 	size -= layers[0]->size();
 	return size;
+}
+
+Model& Model::input(std::vector<double> input)
+{
+	layers.front()->input(input);
+	return *this;
+}
+
+std::vector<double> Model::output()
+{
+	return layers.back()->output();
 }
 
 std::ostream& operator<< (std::ostream& os, const Model& obj)
