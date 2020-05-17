@@ -30,11 +30,15 @@
 
 #include "neural.hpp"
 
+namespace neurotick {
+
 class Layer;
 class Model;
 
 /**
  * @brief      This class describes a connector.
+ * 
+ * @ingroup    Model
  */
 class Connector {
 
@@ -50,5 +54,7 @@ class Connector {
 		void connect(Model& model);
 
 };
+
+}
 
 #endif

@@ -20,7 +20,7 @@
  * @author   Weinsen
  * @date     2020/05/15
  * @brief    { brief }
- * @defgroup { group }
+ * @defgroup BlockRace
  * 
  * { Full Description }
  */
@@ -30,6 +30,8 @@
 
 #include "neural.hpp"
 #include "pointvector.hpp"
+
+using namespace neurotick;
 
 class Racer {
 

@@ -30,6 +30,8 @@
 
 #include "neural.hpp"
 
+namespace neurotick {
+
 class Neuron;
 class NeuronBase;
 
@@ -41,6 +43,8 @@ typedef struct {
 
 /**
  * @brief      This class describes a neuron base.
+ * 
+ * @ingroup    Model
  */
 class NeuronBase {
 
@@ -72,6 +76,8 @@ class NeuronBase {
 
 /**
  * @brief      This class describes a neuron.
+ * 
+ * @ingroup    Model
  */
 class Neuron : public NeuronBase {
 
@@ -99,5 +105,7 @@ class Neuron : public NeuronBase {
 		std::ostream& print(std::ostream& out) const;
 		
 };
+
+}
 
 #endif

@@ -19,13 +19,16 @@ This will allow to carry the best characteristics, avoiding "local best fits".
 
 # How it is using neurotick
 
+In racer.hpp the namespace is called in to the project. Once its included by the other files, its needed only here.
+```
+using namespace neurotick;
+```
+
 In main.cpp of this simulation, a neural model is created using neurotick API.
 
 ```
 Model model;
-model.addLayer("l1").addLayer("l2");
-model.getLayer("l1").addNeurons(3);
-model.getLayer("l2").addNeurons(2);
+model.addLayer("i", 3).addLayer("o", 2);
 ```
 
 This model is later passed to a training engine, which will manage the genetic passing of code each race.
@@ -54,3 +57,13 @@ vel->set(v);
 pos->add(vel->get());		
 ```
 
+# Changelog
+
+## neurotick::v0.1.5
+
+- Better model abstraction
+- Code cleaning
+
+## neurotick::v0.1.4
+
+- Initial block race release

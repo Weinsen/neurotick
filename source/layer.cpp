@@ -1,5 +1,7 @@
 #include "layer.hpp"
 
+namespace neurotick {
+
 /**
  * @brief      { function_description }
  *
@@ -113,4 +115,6 @@ Layer& Layer::operator= (Layer& obj)
 		}
 	}
 	return *this;
+}
+
 }

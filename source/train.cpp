@@ -1,5 +1,7 @@
 #include "train.hpp"
 
+namespace neurotick {
+
 Trainer::Trainer(Model& model) : model(model)
 {
 	
@@ -20,6 +22,18 @@ Model& Trainer::createModel()
 Trainer& Trainer::createModels()
 {
 	int q = batch_size;
+	while (q) {
+		createModel();
+		q--;
+	}
+
+	return *this;
+}
+
+Trainer& Trainer::createModels(int quantity)
+{
+	setBatch(quantity);
+	int q = quantity;
 	while (q) {
 		createModel();
 		q--;
@@ -72,7 +86,6 @@ Trainer& Trainer::run()
 {	
 	Connector linker;
 
-	int q = batch_size;
 	for (auto m : models) {
 		randomizeVector(*m);
 		linker.connect(*m);
@@ -116,4 +129,6 @@ std::vector<std::vector<double>> Trainer::output()
 std::vector<double> Trainer::output(int id)
 {
 	return models[id]->output();
+}
+
 }

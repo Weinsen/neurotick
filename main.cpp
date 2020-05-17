@@ -5,6 +5,8 @@
 
 #include "neural.hpp"
 
+using namespace neurotick;
+
 int main() 
 {
 

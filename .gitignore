@@ -1,4 +1,7 @@
 build/*
 Build/*
 Doxygen/*
-# examples/*/
+
+# Examples
+examples/*
+!examples/*/block_race
