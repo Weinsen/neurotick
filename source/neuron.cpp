@@ -1,6 +1,8 @@
 #include "neural.hpp"
 #include "neuron.hpp"
 
+namespace neurotick {
+
 NeuronBase::NeuronBase() : id(0), name(""), value(0)
 {
 
@@ -139,4 +141,6 @@ std::ostream& Neuron::print(std::ostream& out) const
 std::ostream& operator<< (std::ostream& os, const NeuronBase& obj)
 {
 	return obj.print(os);
+}
+
 }

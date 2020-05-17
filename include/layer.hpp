@@ -30,10 +30,14 @@
 
 #include "neural.hpp"
 
+namespace neurotick {
+
 class Model;
 
 /**
  * @brief      This class describes a layer.
+ * 
+ * @ingroup    Model
  */
 class Layer {
 
@@ -66,5 +70,7 @@ class Layer {
 
 
 };
+
+}
 
 #endif

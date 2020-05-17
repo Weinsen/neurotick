@@ -2,25 +2,25 @@
 #include "racer.hpp"
 #include "track.hpp"
 
+using namespace neurotick;
+
 int main() 
 { 
 
     // Game parameters
     Track track;
-    track.width(55).height(33).capacity(26).newGoal();
+    track.width(55).height(33).capacity(60).newGoal();
 
     // Create model
     Model model;
-    model.addLayer("l1").addLayer("l2");
-    model.getLayer("l1").addNeurons(3);
-    model.getLayer("l2").addNeurons(2);
-  
+    model.addLayer("i", 3).addLayer("o", 2);
+
     // Model engines
     Trainer engine(model);
     engine.setBatch(track.capacity());
     engine.randomizeVectors();
     track.engine(&engine);
-    std::vector<Racer *> racers;
+
 
     std::cout << "RACERS JOIN THE COMPETITION!" << std::endl;
 

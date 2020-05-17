@@ -1,5 +1,7 @@
 #include "connector.hpp"
 
+namespace neurotick {
+
 // void Connector::connect(Model& model, std::string receptor, std::string layer)
 // {
 // 	std::vector<NeuronBase *>* neurons1 = model.getLayer(receptor).getNeurons();
@@ -83,4 +85,6 @@ void Connector::connect(Model& model)
 			}
 		}
 	}
+}
+
 }

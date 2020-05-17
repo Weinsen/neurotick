@@ -20,7 +20,7 @@
  * @author   Weinsen
  * @date     2020/05/16
  * @brief    { brief }
- * @defgroup { group }
+ * @defgroup BlockRace
  * 
  * { Full Description }
  */

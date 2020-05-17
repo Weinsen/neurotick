@@ -1,7 +1,5 @@
 #include "racer.hpp"
 
-
-
 int Racer::count = 0;
 
 Racer::Racer()

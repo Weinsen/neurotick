@@ -30,6 +30,8 @@
 
 #include "neural.hpp"
 
+namespace neurotick {
+
 class Layer;
 class NeuronBase;
 
@@ -50,6 +52,7 @@ class Model {
 		Model();
 		Model(Model& obj);
 		Model& addLayer(std::string name);
+		Model& addLayer(std::string name, int neurons);
 		Model& addNamed(std::string name, NeuronBase *neuron); 
 		Model& setLinks();
 		Model& calculate();
@@ -71,5 +74,7 @@ class Model {
 		std::ostream& print(std::ostream& out) const;
 
 };
+
+}
 
 #endif

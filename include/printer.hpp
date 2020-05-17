@@ -30,11 +30,15 @@
 
 #include "neural.hpp"
 
+namespace neurotick {
+
 class Printer {
 
 	public:
 		std::ostream& print(Model& model);
 
 };
+
+}
 
 #endif

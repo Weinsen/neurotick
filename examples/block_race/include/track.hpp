@@ -20,7 +20,7 @@
  * @author   Weinsen
  * @date     2020/05/16
  * @brief    { brief }
- * @defgroup { group }
+ * @defgroup BlockRace
  * 
  * { Full Description }
  */
@@ -42,7 +42,7 @@ class Track {
 		int h{30};
 		int cap{10};
 		int gen{0};
-		int winner;
+		int winner{0};
 		double bestDistance;
 		std::vector<Racer *> racers; 
 		PointVector* destination;

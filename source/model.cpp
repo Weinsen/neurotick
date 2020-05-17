@@ -1,5 +1,7 @@
 #include "model.hpp"
 
+namespace neurotick {
+
 int Model::count = 0;
 
 /**
@@ -39,6 +41,16 @@ Model& Model::addLayer(std::string name)
 
 	namedLayers[name] = (new Layer(*this, name));
 	layers.push_back(namedLayers[name]);
+
+	return *this;
+
+}
+
+Model& Model::addLayer(std::string name, int neurons) 
+{
+
+	addLayer(name);
+	namedLayers[name]->addNeurons(neurons);
 
 	return *this;
 
@@ -140,4 +152,6 @@ Model& Model::operator= (Model& obj)
 	}
 	connections = obj.connections;
 	return *this;
+}
+
 }
